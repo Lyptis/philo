@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:40:40 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/06/11 16:02:17 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:09:17 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-t_data	*fill_data(int argc, char **argv)
+t_data	*fill_data(char **argv)
 {
 	t_data	*info;
 
@@ -58,5 +58,8 @@ t_data	*fill_data(int argc, char **argv)
 	else
 		info->nbe = -1;
 	info->start = 0;
+	pthread_mutex_init(&(info->deadlock), NULL);
+	pthread_mutex_init(&(info->prompt), NULL);
+	info->dead = 0;
 	return (info);
 }

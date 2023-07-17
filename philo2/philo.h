@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:46:03 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/06/08 18:27:47 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/17 14:20:39 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@
 # include <sys/time.h>
 # include <stdlib.h>
 
+struct s_data;
+
 typedef struct s_philo
 {
 	int				philo;
 
 	pthread_mutex_t	fork_r;
 	pthread_mutex_t	*fork_l;
+	int	last_eat;
 	struct s_philo	*next;
-	struct t_data	*data;
+	struct s_data	*data;
 }				t_philo;
 
 typedef struct s_data
@@ -36,15 +39,21 @@ typedef struct s_data
 	int				tte;
 	int				tts;
 	int				nbe;
-	unsigned long	*start;
+	pthread_mutex_t	deadlock;
+	pthread_mutex_t	prompt;
+	int				dead;
+	unsigned long	start;
 }				t_data;
 
 /*****Initialize*****/
-t_data			*fill_data(int argc, char **argv);
+t_data			*fill_data(char **argv);
 t_philo			**bornphilo(int nb_philo);
 
 /********Time********/
 void			msleep(unsigned long ms);
 unsigned long	gettime(unsigned long start);
+
+/*******Prompt*******/
+void	prompt(t_philo *philo, char *str);
 
 #endif
