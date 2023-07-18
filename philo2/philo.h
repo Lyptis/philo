@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:46:03 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/17 14:20:39 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/18 12:42:16 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,8 @@ unsigned long	gettime(unsigned long start);
 
 /*******Prompt*******/
 void	prompt(t_philo *philo, char *str);
+
+/********Utils*******/
+int	ft_atoi(const char *str);
 
 #endif

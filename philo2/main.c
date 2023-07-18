@@ -6,11 +6,13 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:34:37 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/17 15:34:00 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/18 16:08:05 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
 
 int	checkdeath(t_data *data)
 {
@@ -22,25 +24,39 @@ int	checkdeath(t_data *data)
 	return (dead);
 }
 
+int	isdead(t_philo *philo, t_data *data)
+{
+	if ((unsigned long)(philo->last_eat + data->ttd) <= gettime(data->start))
+	{	
+		if (!checkdeath(philo->data))
+		{
+			pthread_mutex_lock(&(data->deadlock));
+			philo->data->dead = 1;
+			pthread_mutex_unlock(&(data->deadlock));
+			prompt(philo, "died");
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int	eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->fork_r));
-	prompt(philo, "has taken a fork");
-	if (!philo->fork_l)
-	{
-		msleep(philo->data->ttd);
+	if (checkdeath(philo->data) || isdead(philo, philo->data))
 		return (1);
-	}
+	prompt(philo, "has taken a fork");
 	pthread_mutex_lock(philo->fork_l);
 	if (!checkdeath(philo->data))
 	{
 		prompt(philo, "has taken a fork");
 		prompt(philo, "is eating");
+		philo->last_eat = gettime(philo->data->start);
 		msleep(philo->data->tte);
 	}
 	pthread_mutex_unlock(philo->fork_l);
 	pthread_mutex_unlock(&(philo->fork_r));
-	philo->last_eat = gettime(philo->data->start);
+	
 	return (0);
 }
 
@@ -58,14 +74,7 @@ int	sleeping(t_philo *philo)
 
 void	think(t_philo *philo)
 {
-	if ((unsigned long)(philo->last_eat + philo->data->ttd) < gettime(philo->data->start))
-	{
-		pthread_mutex_lock(&(philo->data->deadlock));
-		philo->data->dead = 1;
-		pthread_mutex_unlock(&(philo->data->deadlock));
-		prompt(philo, "died");
-	}
-	else
+	if (!isdead(philo, philo->data) && !checkdeath(philo->data))
 		prompt(philo, "is thinking");
 }
 
@@ -81,7 +90,8 @@ void	*life(void *arg)
 	{
 		if (philo->philo % 2 != 0)
 		{
-			eat(philo);
+			if (!isdead(philo, philo->data))
+				eat(philo);
 			if (!sleeping(philo))
 				think(philo);
 		}
@@ -89,12 +99,10 @@ void	*life(void *arg)
 		{
 			if (!sleeping(philo))
 				think(philo);
-			if (!checkdeath(philo->data))
+			if (!isdead(philo, philo->data))
 				eat(philo);
 		}
 	}
-	// printf("philo[%d] {\nstart :%lu\ncurrent :%lu\n}\n", philo->philo, philo->data->start, gettime(0));
-	// printf("elapsed : %lu, philo[%d] - DONE\n", gettime(philo->data->start), philo->philo);
 	return (NULL);
 }
 

@@ -6,13 +6,13 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:40:40 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/17 14:09:17 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/18 12:41:34 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	char	*s;
 	int		i;
