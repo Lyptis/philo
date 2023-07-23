@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:51:06 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/17 15:08:20 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:52:25 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_philo	*create_philo(int i)
 	new = malloc(sizeof(t_philo));
 	if (!new)
 		return (NULL);
-	new->philo = i;
+	new->philo = i + 1;
 	pthread_mutex_init(&(new->fork_r), NULL);
 	new->fork_l = 0;
 	new->last_eat = 0;
@@ -51,8 +51,8 @@ t_philo	**bornphilo(int nb_philo)
 	if (!philos)
 		return (NULL);
 	*philos = 0;
-	i = 0;
-	while (i < nb_philo)
+	i = -1;
+	while (++i < nb_philo)
 	{
 		new = create_philo(i);
 		last = get_last(philos);
@@ -63,7 +63,6 @@ t_philo	**bornphilo(int nb_philo)
 			new->fork_l = &(last->fork_r);
 			last->next = new;
 		}
-		i++;
 	}
 	if (i > 0)
 		(*philos)->fork_l = &(new->fork_r);

@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:40:40 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/18 12:41:34 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:55:52 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_data	*fill_data(char **argv)
 	info->philo = bornphilo(info->nb_philo);
 	if (!info->philo)
 		return (NULL);
+	info->tid = 0;
 	info->ttd = ft_atoi(argv[2]);
 	info->tte = ft_atoi(argv[3]);
 	info->tts = ft_atoi(argv[4]);

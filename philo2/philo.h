@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:46:03 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/18 12:42:16 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:54:44 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <sys/time.h>
 # include <stdlib.h>
 
-struct s_data;
+struct	s_data;
 
 typedef struct s_philo
 {
@@ -26,7 +26,7 @@ typedef struct s_philo
 
 	pthread_mutex_t	fork_r;
 	pthread_mutex_t	*fork_l;
-	int	last_eat;
+	int				last_eat;
 	struct s_philo	*next;
 	struct s_data	*data;
 }				t_philo;
@@ -34,6 +34,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	t_philo			**philo;
+	pthread_t		*tid;
 	int				nb_philo;
 	int				ttd;
 	int				tte;
@@ -49,14 +50,24 @@ typedef struct s_data
 t_data			*fill_data(char **argv);
 t_philo			**bornphilo(int nb_philo);
 
+/***DeathCheckers****/
+int				checkdeath(t_data *data);
+int				isdead(t_philo *philo, t_data *data);
+
+/*****PhiloLife******/
+int				eat(t_philo *philo);
+int				sleeping(t_philo *philo);
+void			think(t_philo *philo);
+void			*life(void *arg);
+
 /********Time********/
-void			msleep(unsigned long ms);
+void			msleep(t_philo *philo, unsigned long ms);
 unsigned long	gettime(unsigned long start);
 
 /*******Prompt*******/
-void	prompt(t_philo *philo, char *str);
+void			prompt(t_philo *philo, char *str);
 
 /********Utils*******/
-int	ft_atoi(const char *str);
+int				ft_atoi(const char *str);
 
 #endif
