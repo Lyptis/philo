@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:51:06 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/25 17:27:01 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:40:20 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static t_philo	*create_philo(int i)
 	new->philo = i + 1;
 	pthread_mutex_init(&(new->fork_r), NULL);
 	new->fork_l = 0;
+	pthread_mutex_init(&(new->le_lock), NULL);
 	new->last_eat = 0;
 	new->eat = 0;
 	new->next = 0;
@@ -65,7 +66,7 @@ t_philo	**bornphilo(int nb_philo)
 			last->next = new;
 		}
 	}
-	if (i > 0)
+	if (i > 1)
 		(*philos)->fork_l = &(new->fork_r);
 	return (philos);
 }

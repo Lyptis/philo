@@ -6,11 +6,42 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:34:37 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/25 17:30:53 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/26 09:05:06 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_free(t_data	*info)
+{
+	t_philo	*curr;
+	t_philo	*tmp;
+
+	curr = *(info->philo);
+	while (curr)
+	{
+		tmp = curr;
+		curr = curr->next;
+		free(tmp);
+	}
+	free(info->philo);
+	free(info->tid);
+}
+
+void	destroy(t_data	*info)
+{
+	t_philo	*curr;
+
+	curr = *(info->philo);
+	while (curr)
+	{
+		pthread_mutex_destroy(&(curr->fork_r));
+		curr = curr->next;
+	}
+	pthread_mutex_destroy(&(info->deadlock));
+	pthread_mutex_destroy(&(info->prompt));
+	ft_free(info);
+}
 
 void	routine(t_data *info)
 {
@@ -64,5 +95,7 @@ int	main(int argc, char **argv)
 		return (1);
 	info = fill_data(argv);
 	simulate(info);
+	destroy(info);
+	free(info);
 	return (0);
 }

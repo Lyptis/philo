@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 14:46:03 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/25 17:24:42 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:24:22 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_philo
 
 	pthread_mutex_t	fork_r;
 	pthread_mutex_t	*fork_l;
+	pthread_mutex_t	le_lock;
 	int				last_eat;
 	int				eat;
 	struct s_philo	*next;

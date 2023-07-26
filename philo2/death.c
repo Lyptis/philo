@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 12:31:49 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/25 17:34:14 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:24:07 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ int	checkdeath(t_data *data)
 int	isdead(t_philo *philo, t_data *data)
 {
 	unsigned long	time;
+	int	ttd;
 
-	time = philo->data->start;
-	if ((unsigned long)(philo->last_eat + data->ttd) <= gettime(data->start))
-	{	
+	time = data->start;
+	pthread_mutex_lock(&(philo->le_lock));
+	ttd = philo->last_eat + data->ttd;
+	pthread_mutex_unlock(&(philo->le_lock));
+	if ((unsigned long)ttd <= gettime(data->start))
+	{
 		if (!checkdeath(philo->data))
 		{
 			pthread_mutex_lock(&(data->deadlock));
