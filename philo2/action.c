@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 12:33:05 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/23 12:46:52 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:25:28 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	eat(t_philo *philo)
 	}
 	prompt(philo, "is eating");
 	philo->last_eat = gettime(philo->data->start);
+	philo->eat++;
 	msleep(philo, philo->data->tte);
 	pthread_mutex_unlock(&(philo->fork_r));
 	pthread_mutex_unlock(philo->fork_l);

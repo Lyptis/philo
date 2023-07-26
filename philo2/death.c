@@ -6,11 +6,25 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 12:31:49 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/23 12:49:20 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:34:14 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	checkeat(t_data *info)
+{
+	t_philo	*curr;
+
+	curr = *(info->philo);
+	while (curr)
+	{
+		if (info->nbe < 0 || curr->eat < info->nbe)
+			return (0);
+		curr = curr->next;
+	}
+	return (1);
+}
 
 int	checkdeath(t_data *data)
 {
@@ -19,6 +33,8 @@ int	checkdeath(t_data *data)
 	pthread_mutex_lock(&(data->deadlock));
 	dead = data->dead;
 	pthread_mutex_unlock(&(data->deadlock));
+	if (!dead)
+		dead = checkeat(data);
 	return (dead);
 }
 

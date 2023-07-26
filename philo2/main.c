@@ -6,14 +6,17 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:34:37 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/07/23 12:58:02 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:30:53 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	routine(t_data info)
+void	routine(t_data *info)
 {
+	t_philo		*curr;
+
+	curr = *(info->philo);
 	while (info->start > gettime(0))
 		;
 	while (!checkdeath(info))
@@ -43,8 +46,8 @@ void	simulate(t_data	*info)
 			curr = curr->next;
 		i++;
 	}
-	curr = *(info->philo);
-
+	info->tid = tid;
+	routine(info);
 	i = 0;
 	while (i < info->nb_philo)
 	{
@@ -57,7 +60,7 @@ int	main(int argc, char **argv)
 {
 	t_data	*info;
 
-	if (argc != 5)
+	if (argc != 5 && argc != 6)
 		return (1);
 	info = fill_data(argv);
 	simulate(info);
