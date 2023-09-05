@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 12:33:05 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/27 15:02:06 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/09/05 17:26:47 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	eat(t_philo *philo)
 		return (border(philo));
 	if (!philo->fork_l)
 		return (single(philo));
-	pthread_mutex_lock(&(philo->fork_r));
-	prompt(philo, "has taken a fork");
 	pthread_mutex_lock(philo->fork_l);
+	prompt(philo, "has taken a fork");
+	pthread_mutex_lock(&(philo->fork_r));
 	prompt(philo, "has taken a fork");
 	prompt(philo, "is eating");
 	pthread_mutex_lock(&(philo->le_lock));
@@ -30,8 +30,8 @@ int	eat(t_philo *philo)
 	philo->eat++;
 	pthread_mutex_unlock(&(philo->eats));
 	msleep(philo, philo->data->tte);
-	pthread_mutex_unlock(&(philo->fork_r));
 	pthread_mutex_unlock(philo->fork_l);
+	pthread_mutex_unlock(&(philo->fork_r));
 	return (0);
 }
 

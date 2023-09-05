@@ -6,7 +6,7 @@
 #    By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/30 14:45:48 by svanmeen          #+#    #+#              #
-#    Updated: 2023/08/27 15:03:57 by svanmeen         ###   ########.fr        #
+#    Updated: 2023/09/05 17:33:07 by svanmeen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME	= philo
 
 GCC		= cc
 RM		= rm -f
-FLAGS	=  -Wall -Wextra -Werror #-g3 -fsanitize=thread -ltsan
+FLAGS	= -Wall -Wextra -Werror
 
 %.o: %.c	${HSRC}
 			${GCC} ${FLAGS} -c $< -o $@
