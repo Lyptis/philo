@@ -1,5 +1,4 @@
 {
-	"discord.enabled": true,
 	"files.associations": {
 		"philo.h": "c"
 	}

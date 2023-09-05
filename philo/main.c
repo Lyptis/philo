@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 17:34:37 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/27 13:50:22 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:56:38 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ int	main(int argc, char **argv)
 	t_data	*info;
 
 	if (argc != 5 && argc != 6)
-		return (1);
+		return (printf("Invalid Args\n"));
 	if (input(argc, argv))
-		return (1);
+		return (printf("Invalid Args\n"));
 	info = fill_data(argv);
 	simulate(info);
 	destroy(info);
